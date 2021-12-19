@@ -1,11 +1,11 @@
 {
   "name": "thm-api",
   "version": "1.0.4",
-  "type": "module",
   "description": "Unofficial TryHackMe Node.js/TypeScript library",
   "main": "build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
