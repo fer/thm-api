@@ -5,6 +5,7 @@
     "outDir": "build",
     "module": "commonjs",
     "esModuleInterop": true,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule":true,
