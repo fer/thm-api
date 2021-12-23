@@ -1,6 +1,6 @@
 {
   "name": "thm-api",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Unofficial TryHackMe Node.js/TypeScript library",
   "main": "build/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "test": "jest",
     "gen:typedoc": "./node_modules/.bin/typedoc && sed -i \"1s/.*/# ThmApi/\" ./doc/classes/ThmApi.md",
     "gen:readme": "npm run gen:typedoc ; npm run test:coverage ; echo '[![npm version](https://badge.fury.io/js/thm-api.svg)](https://badge.fury.io/js/thm-api)' > README.md ; cat coverage/badge-* >> README.md ; echo >> README.md ; cat ./doc/classes/ThmApi.md >> README.md",
-    "test:coverage": "npm test -- --coverage && ./node_modules/.bin/jest-coverage-badges"    
+    "test:coverage": "npm test -- --coverage && ./node_modules/.bin/jest-coverage-badges"
   },
   "repository": {
     "type": "git",
