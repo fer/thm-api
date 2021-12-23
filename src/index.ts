@@ -180,9 +180,14 @@ export class ThmApi {
    * @param roomName TryHackMe room name
    * @param callback Data callback function
    */
-  public getRoomTasks(roomName: string, callback: Function): void {
-    axios.get(this.api_room_tasks + roomName)
-    .then((resp: AxiosResponse) => callback(resp.data))
+  public async getRoomTasks(roomName: string, callback: Function) {    
+    axios.get(this.api_room_tasks + roomName, { headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36' }  })
+    .then((resp: AxiosResponse) => { 
+      if (resp.headers['content-type'] == "text/html; charset=utf-8") {
+        throw new Error(`This room might be private. thm-cli doesn't list support private rooms yet. \n`)  
+      } 
+      callback(resp.data.data[0])
+    } )
     .catch((err: AxiosError) => {
       throw new Error(`API.getRoomTasks threw an error! \n${err}`)
     })
