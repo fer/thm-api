@@ -1,0 +1,17 @@
+{
+    "name": "ThmApi",
+    "entryPoints": [
+        "./src/index.ts"
+    ],
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "includeVersion": true,
+    "disableSources": true,
+    "hideInPageTOC": true,
+    "hideBreadcrumbs": true,
+    "cleanOutputDir": true,
+    "namedAnchors": false,
+    "hideGenerator": true,
+    "categorizeByGroup": false,
+    "out": "doc"
+}

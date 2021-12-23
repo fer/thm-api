@@ -8,8 +8,7 @@ module.exports = {
     transform: {
         "^.+\\.(ts|tsx)$": "ts-jest"
     },
-    testMatch: [
-        
+    testMatch: [        
         "**/*.spec.(ts|js)"
     ],
     testEnvironment: "node"

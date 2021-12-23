@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",
-    "test": "jest"
+    "test": "jest",
+    "gen-doc": "./node_modules/.bin/typedoc; sed -i \"1s/.*/# ThmApi/\" ./doc/classes/ThmApi.md ; mv ./doc/classes/ThmApi.md ./README.md"
   },
   "repository": {
     "type": "git",
@@ -22,16 +23,17 @@
     "axios": "^0.24.0"
   },
   "keywords": [
-    "nodejs",
+    "NodeJS",
     "TryHackMe",
-    "typescript",
-    "api"
+    "TypeScript",
+    "API"
   ],
   "devDependencies": {
     "@types/jest": "^27.0.3",
     "jest": "^27.4.5",
     "ts-jest": "^27.1.2",
-    "typedoc": "^0.22.10"
+    "typedoc": "^0.22.10",
+    "typedoc-plugin-markdown": "^3.11.8"
   },
   "types": "./build/index.d.ts",
   "directories": {

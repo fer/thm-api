@@ -1,22 +1,30 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
-
 import { CountryEnum } from './lib/country.enum'
 
-export const countryEnum = CountryEnum;
-
 /**
- * ThmApi constructor. Create an instance to work with TryHackMe public API.
+ * Unofficial TryHackMe Node.js/TypeScript library.
  *
- * ```js
- * let api = new ThmApi();
+ * ## Install
+ * 
+ * ```bash 
+ * npm i --save-dev thm-api
  * ```
- * @name ThmApi
- * @api public
+ * 
+ * ## Usage
+ * 
+ * ```typescript
+ * import { API, countryEnum } from 'thm-api'
+ * const api = new API()
+ * 
+ * api.getLeaderboard('0day', 'US', (rank: number) => {
+ *   console.log(rank)
+ * })
+ * ```
+ * 
  */
 
-
 export class ThmApi {
-  private baseUrl: string = 'https://tryhackme.com/'
+  readonly baseUrl: string = 'https://tryhackme.com/'
   private api_url_user_rank: string = this.baseUrl + 'api/user/rank/'
   private api_url_leaderboard: string = this.baseUrl + 'api/leaderboards'
   private api_similar_users: string = this.baseUrl + 'api/similar-users/'
@@ -26,7 +34,7 @@ export class ThmApi {
   private api_user_url: string = this.baseUrl + 'p/'
   private api_room_votes: string = this.baseUrl + 'api/room/votes?code='
 
-  private countryCodeExists = (code: string): boolean => code in CountryEnum
+  private countryCodeExists = (code: string): boolean => code in this.countryList
 
   private getUserRankOnCountryLeaderboard(countryCode: string, callback: Function) {
     const params = { params: { country: countryCode } }
@@ -45,15 +53,26 @@ export class ThmApi {
         throw new Error(`API.getUserRankWorldWideLeaderboard with username "${username}" threw an error! \n${err}`)
       })
   }
-  
+
   /**
-   * @name getLeaderboard
-   * 
-   * @param  {string} username
-   * @param  {string} countryCode
-   * @param  {Function} callback
+   * Returns an object with country code/name pairs.
+   *
+   * @readonly
+   * @type {Object}
+   * @memberof ThmApi
    */
-  public getLeaderboard(username: string, countryCode: string, callback: Function) {
+  get countryList(): Object {
+    return CountryEnum
+  }
+
+  /**
+   * Gets rank for an user in a country if provided.
+   * 
+   * @param username TryHackMe username
+   * @param countryCode Country code
+   * @param callback Data callback function
+   */
+  public getLeaderboard(username: string, countryCode: string, callback: Function): void {
     if (countryCode === '') this.getUserRankWorldWideLeaderboard(username, callback)
     else {
       if (!this.countryCodeExists(countryCode.toUpperCase()))
@@ -68,82 +87,89 @@ export class ThmApi {
   }
 
   /**
-   * @name searchUsername
+   * Searches for similar usernames. 
+   * Used to invite users in the platform.
    * 
-   * @param  {string} str
-   * @param  {Function} callback
+   * @param username TryHackMe username
+   * @param callback Data callback function
    */
-  public searchUsername = (str: string, callback: Function) =>
-    axios.get(this.api_similar_users + str)
+  public searchUsername(username: string, callback: Function): void {
+    axios.get(this.api_similar_users + username)
       .then((resp: AxiosResponse) => callback(resp.data))
       .catch((err: AxiosError) => {
-        throw new Error(`API.searchUsername with '${str}' threw an error! \n${err}`)
+        throw new Error(`API.searchUsername with '${username}' threw an error! \n${err}`)
       })
+  }
 
   /**
-   * @name checkIfUsernameExists
+   * Checks for existence of an user.
    * 
-   * @param  {string} username
-   * @param  {Function} callback
+   * @param username TryHackMe username
+   * @param callback Data callback function
    */
-  public checkIfUsernameExists = (username: string, callback: Function) =>
+  public checkIfUsernameExists(username: string, callback: Function): void {
     axios.get(this.api_user_url + username)
       .then(() => callback(true))
       .catch(() => callback(false))
+  }
   
   /**
-   * @name getNewRooms
+   * Get a list with the newest released TryHackMe rooms.
    * 
-   * @param  {} callback
+   * @param callback Data callback function
    */
-  public getNewRooms = (callback) =>
+  public getNewRooms(callback: Function): void {
     axios.get(this.api_new_rooms)
       .then((resp: AxiosResponse) => callback(resp.data))
       .catch((err: AxiosError) => {
         throw new Error(`API.getNewRooms threw an error! \n${err}`)
       })
-      
+  }
+   
   /**
-   * @name getSeries
+   * Get learning paths.
    * 
-   * @param  {} callback
+   * @param callback Data callback function
    */
-  public getSeries = (callback) =>
+  public getSeries(callback: Function): void {
     axios.get(this.api_series)
       .then((resp: AxiosResponse) => callback(resp.data))
       .catch((err: AxiosError) => {
         throw new Error(`API.getSeries threw an error! \n${err}`)
       })
+  }
   
   /**
-   * @name getRoomDetails
+   * Get room details.
    * 
-   * @param  {string} str
-   * @param  {} callback
+   * @param roomName TryHackMe roomname
+   * @param callback Data callback function
    */
-  public getRoomDetails = (str: string, callback) =>
-    axios.get(this.api_room_details + str)
+
+  public getRoomDetails(roomName: string, callback: Function): void {
+    axios.get(this.api_room_details + roomName)
       .then((resp: AxiosResponse) => {
-        if (resp.data[str].success)
-          callback(resp.data[str])
+        if (resp.data[roomName].success)
+          callback(resp.data[roomName])
         else
-          throw new Error(`API.getRoomDetails: '${str}' does not exist!`)
+          throw new Error(`API.getRoomDetails: '${roomName}' does not exist!`)
       })
       .catch((err: AxiosError) => {
         throw new Error(`API.getRoomDetails threw an error! \n${err}`)
       })
-
-      
+  }
+  
   /**
-   * @name getRoomVotes
+   * Get votes for a given room name.
    * 
-   * @param  {string} str
-   * @param  {} callback
+   * @param roomName TryHackMe roomname
+   * @param callback Data callback function
    */
-  public getRoomVotes = (str: string, callback) =>
-    axios.get(this.api_room_votes + str)
+  public getRoomVotes(roomName: string, callback: Function): void {
+    axios.get(this.api_room_votes + roomName)
       .then((resp: AxiosResponse) => callback(resp.data))
       .catch((err: AxiosError) => {
-        throw new Error(`API.getSeries threw an error! \n${err}`)
+        throw new Error(`API.getRoomVotes threw an error! \n${err}`)
       })
+  } 
 }
