@@ -33,6 +33,7 @@ export class ThmApi {
   private api_room_details: string = this.baseUrl + 'api/room/details?codes='
   private api_user_url: string = this.baseUrl + 'p/'
   private api_room_votes: string = this.baseUrl + 'api/room/votes?code='
+  private api_room_tasks: string = this.baseUrl + 'api/tasks/'
 
   private countryCodeExists = (code: string): boolean => code in this.countryList
 
@@ -172,4 +173,18 @@ export class ThmApi {
         throw new Error(`API.getRoomVotes threw an error! \n${err}`)
       })
   } 
+
+  /**
+   * Get tasks API object for a given room name.
+   * 
+   * @param roomName TryHackMe room name
+   * @param callback Data callback function
+   */
+  public getRoomTasks(roomName: string, callback: Function): void {
+    axios.get(this.api_room_tasks + roomName)
+    .then((resp: AxiosResponse) => callback(resp.data))
+    .catch((err: AxiosError) => {
+      throw new Error(`API.getRoomTasks threw an error! \n${err}`)
+    })
+  }
 }
