@@ -24,7 +24,7 @@ import { CountryEnum } from './lib/country.enum'
  */
 
 export class ThmApi {
-  readonly baseUrl: string = 'https://tryhackme.com/'
+  private baseUrl: string = 'https://tryhackme.com/'
   private api_url_user_rank: string = this.baseUrl + 'api/user/rank/'
   private api_url_leaderboard: string = this.baseUrl + 'api/leaderboards'
   private api_similar_users: string = this.baseUrl + 'api/similar-users/'
