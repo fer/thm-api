@@ -5,6 +5,7 @@
     "outDir": "build",
     "module": "commonjs",
     "esModuleInterop": true,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule":true,
@@ -15,6 +16,6 @@
       "transpileOnly": true,
       "resolveJsonModule": true,
   },
-  "include": ["index.ts", "lib/*.ts"],
+  "include": ["src/index.ts", "src/lib/*.ts"],
   "exclude": ["node_modules", ".vscode"]
 }
