@@ -1,6 +1,6 @@
 {
   "name": "thm-api",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Unofficial TryHackMe Node.js/TypeScript library",
   "main": "build/index.js",
   "scripts": {
