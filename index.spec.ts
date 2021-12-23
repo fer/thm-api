@@ -29,16 +29,21 @@ describe('Testing thm-api', () => {
     api.getSeries((series)=> expect(Array.isArray(series)).toBeTruthy())
   })
 
-  it.only(`getRoomDetails throws an error when`, () => {
-    try {
-      api.getRoomDetails(fakeRoomName, (data) => {
-        // console.log(data)
-      })
-    } catch(e) {
-      // console.log('>>>>', e)
-    }
-    expect(true).toBeTruthy()
+  // it.only(`getRoomDetails throws an error when`, async () => {
 
-  })
+  //   try {
+  //     await api.getRoomDetails(realRoomName, (data) => {
+  //       console.log(data)
+  //     })      
+  //   } catch(e) {
+  //     // console.log('>>>>', e)
+  //     expect(true).toBeTruthy()
+  //   }    
+  // })
+
+  it(`getRoomVotes should return an object with 'upvotes' and 'uservVote' keys `, () => 
+    api.getRoomVotes(realRoomName, (data) => 
+      expect(Reflect.has(data, 'upvotes') && Reflect.has(data, 'upvotes')).toBeTruthy())
+  )
 
 })
