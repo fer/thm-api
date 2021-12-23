@@ -7,20 +7,23 @@
     "build": "tsc",
     "prepare": "npm run build",
     "test": "jest",
-    "gen-doc": "./node_modules/.bin/typedoc; sed -i \"1s/.*/# ThmApi/\" ./doc/classes/ThmApi.md ; mv ./doc/classes/ThmApi.md ./README.md"
+    "gen:typedoc": "./node_modules/.bin/typedoc && sed -i \"1s/.*/# ThmApi/\" ./doc/classes/ThmApi.md",
+    "gen:readme": "npm run gen:typedoc ; npm run test:coverage ; echo '[![npm version](https://badge.fury.io/js/thm-api.svg)](https://badge.fury.io/js/thm-api)' > README.md ; cat coverage/badge-* >> README.md ; echo >> README.md ; cat ./doc/classes/ThmApi.md >> README.md",
+    "test:coverage": "npm test -- --coverage && ./node_modules/.bin/jest-coverage-badges"    
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fer/thm-api.git"
   },
   "author": "fer <fer@ferqwerty.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/fer/thm-api/issues"
   },
   "homepage": "https://github.com/fer/thm-api#readme",
   "dependencies": {
-    "axios": "^0.24.0"
+    "axios": "^0.24.0",
+    "jest-coverage-badges": "^1.1.2"
   },
   "keywords": [
     "NodeJS",

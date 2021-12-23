@@ -11,5 +11,9 @@ module.exports = {
     testMatch: [        
         "**/*.spec.(ts|js)"
     ],
-    testEnvironment: "node"
+    testEnvironment: "node",
+    coverageReporters: [
+        "lcov",
+        "json-summary"
+      ]
 };
