@@ -40,11 +40,14 @@ describe('Testing ThmApi', () => {
     api.getRoomVotes(realRoomName, (data) =>
       expect(Reflect.has(data, 'upvotes') && Reflect.has(data, 'upvotes')).toBeTruthy())
   )
-  it(`getRoomTasks should return an object API for tasks `, () => {
+  it.only(`getRoomTasks should return an object API for tasks `, () => {
     api.getRoomTasks(freeRoomName, (data)=> {
       expect(Array.isArray(data.questions)).toBeTruthy()      
     })
   })
+
+// TODO: fetch when room is CTF
+
 
   // it.only(`getRoomDetails throws an error when`, async () => {
   //   try {
